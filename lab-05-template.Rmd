@@ -10,6 +10,9 @@ output: html_document
 ```{r load-packages, message = FALSE, warning=FALSE}
 library(tidyverse)
 library(ggplot2)
+install.packages("fivethirtyeight")
+library(fivethirtyeight)
+
 ```
 
 
@@ -17,12 +20,12 @@ library(ggplot2)
 
 ## Image 1
 
-```{r echo=FALSE, out.width="100%"}
+```{r echo=FALSE}
 knitr::include_graphics("img/Speaking-the-world.jpg")
 ```
 
 _Write your comments about image 1 below_
-
+The top bar is thciker than the others, the bars are also not to scale as 466 million, visually, is almost equal to 765 million, they could use a more reliable scale for each no of speakers per million, the top bar should also say million not billion as the scale has randomly changed.  
 
 
 
@@ -33,7 +36,7 @@ knitr::include_graphics("img/rose-pop-density-total-area-bw.jpg")
 ```
 
 _Write your comments about image 2 below_
-
+The slices are all different heights, the widths should be different but to make it more readable they should be the same height/length, if they added colour it would be distinguish the different proportions per country.
 
 
 
@@ -44,7 +47,7 @@ knitr::include_graphics("img/life-expectancy-rule-of-law.png")
 ```
 
 _Write your comments about image 3 below_
-
+No title on the graph, since the circles are transparent they all overlap making it hard to read what's on the circles -what they represent, and where they are distinctly. The X axis title "Rule of Law" against life expectancy is confusing so could clarify what either mean with specifics or how they connect with a title.
 
 
 
@@ -55,7 +58,7 @@ knitr::include_graphics("img/global-income-dist.PNG")
 ```
 
 _Write your comments about image 4 below_
-
+The Y axis is a description rather than a label, the graph could be split into three seperate graphs, one with continents, one with countries, and one with developed/ developing countries, OR choose just one to use for this graph ie the most significant factor/variable ie just development status. The X axis scale is really random. 
 
 
 # Data Visualization for Halloween 
@@ -85,6 +88,15 @@ Did you identify the type of variables, remember that this detail is crucial to 
 
 _Write your comments about results_
 
+nrow(candy_df)
+= 85 rows
+ncol(candy_df)
+= 13 columns 
+
+types:
+character, logical and double
+
+
 # Data viz - One variable at a time
 
 Just to use the logical variables as categories, run the following code chunk first!
@@ -99,8 +111,19 @@ candy_df <- candy_df %>%
 Complete the following code to get the data viz to represent "how many candies contain caramel via bar plot". Fill in the blanks, remove the # symbol in front of your code and the execute the code chunk via green play button.
 
 ```{r}
-# ggplot(candy_rankings, aes(x = ______)) +
-#  _____() +
+ggplot(candy_rankings, aes(x= caramel)) +
+  geom_bar() + 
+  labs(y= "Number of caramel") +
+  labs(x= "Caramel") +
+  labs(title = "How many candies contain caramel?")
+ggplot(candy_rankings, aes(x= chocolate)) +
+  geom_bar() + 
+  labs(y= "Number of chocolate") +
+  labs(x= "Chocolate") +
+  labs(title = "How many candies contain chocolate?")
+
+# More candies contain chocolate than caramel.
+
 ```
 
 ## Exercise 3
@@ -108,7 +131,15 @@ Complete the following code to get the data viz to represent "how many candies c
 Now look at a numerical variable, such as `winpercent`. Create an histogram for this variable using ggplot2 functions below. Include informative x and y labels and a title, as a good practice.
 
 ```{r}
-# Your code here
+ggplot(candy_rankings, aes(x= winpercent)) +
+  geom_histogram() +
+  stat_bin(bins = 30) +
+  labs(x= "% of head-to-head match ups won") +
+  labs(y = "total number of candies") +
+  labs(title = "results from online candy match ups")
+  
+# Bin width 20 makes it look more squished together.
+
 
 ```
 
@@ -122,10 +153,16 @@ How about using the both variables; chocolate vs winpercent? Run the following i
 Fill in the blanks, remove the # symbol in front of your code and the execute the code chunk via green play button.
 
 ```{r}
-# Your code here
-#ggplot(candy_df, aes(x = ___________)) +
-#  geom_histogram() +
-#  facet_wrap(___________)
+ggplot(candy_df, aes(x = winpercent ), fill = as.logical(chocolate)) +
+  geom_histogram() +
+  facet_wrap(~chocolate) +
+  labs(x= "% of head-to-head match ups won") +
+  labs(y= "total number of candies") + 
+  stat_bin(bins = 30) 
+  
+
+
+
 
 ```
 
